@@ -1,0 +1,209 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>For Gaurangi, my love</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap">
+<style>
+  /* Layout: one centred card on a warm dark ground; two screens (a question, then the poem) swap inside it. */
+  :root {
+    --bg: #17130f;
+    --bg-glow: #261c12;
+    --card: #1f1e1c;
+    --line: #3b352c;
+    --text: #e3ece6;
+    --muted: #a79f94;
+    --sage: #9db8a8;
+    --sage-deep: #234434;
+    --sage-ink: #eaf5ee;
+    --stone: #4a403a;
+    --rose: #d98c85;
+    --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+    --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(ellipse at 50% 0%, var(--bg-glow) 0%, var(--bg) 62%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    padding-block: 28px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    width: 100%;
+    max-width: 460px;
+    min-width: 0;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 44px;
+    padding: 40px 28px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 22px;
+    line-height: 1.5;
+  }
+  .emoji { font-size: 56px; line-height: 1; margin: 6px 0 18px; }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 8.4vw, 40px);
+    line-height: 1.2;
+    margin: 0 0 14px;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .lead { color: var(--muted); margin: 0 0 28px; text-wrap: balance; }
+  .buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 999px;
+    padding: 16px 28px;
+    cursor: pointer;
+    transition: transform 0.2s ease, padding 0.2s ease, font-size 0.2s ease;
+  }
+  button:focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+  .yes { background: var(--sage-deep); color: var(--sage-ink); }
+  .yes.big { padding: 20px 40px; font-size: 17px; }
+  .no { background: var(--stone); color: #d6cfc5; text-transform: none; letter-spacing: 0; font-size: 16px; }
+  .yes:active, .no:active { transform: scale(0.96); }
+
+  /* Meeting-invite screen */
+  #ask { text-align: left; }
+  #ask h1 { font-size: clamp(28px, 7.6vw, 36px); margin-bottom: 22px; }
+  #ask .buttons { justify-content: flex-start; margin-top: 26px; }
+  .rows { margin: 0; padding: 0; }
+  .rows div { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 14px; padding: 13px 0; border-top: 1px solid var(--line); }
+  .rows div:last-child { border-bottom: 1px solid var(--line); }
+  .rows dt { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage); padding-top: 4px; }
+  .rows dd { margin: 0; color: var(--text); line-height: 1.5; }
+
+  /* Poem screen */
+  .poem-box {
+    border: 1px dashed var(--line);
+    border-radius: 28px;
+    padding: 26px 22px 8px;
+    margin: 22px 0 24px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .stanza { margin: 0 0 24px; }
+  .stanza span { display: block; }
+  .stanza em { font-family: var(--font-display); font-style: italic; color: var(--sage); }
+  .reveal { opacity: 0; transform: translateY(10px); animation: rise 0.9s ease forwards; }
+  .reveal:nth-child(1) { animation-delay: 0.1s; }
+  .reveal:nth-child(2) { animation-delay: 0.9s; }
+  .reveal:nth-child(3) { animation-delay: 1.7s; }
+  .note { color: var(--muted); font-size: 16px; margin: 0 0 20px; text-wrap: balance; }
+  .sign {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(24px, 6.6vw, 30px);
+    color: var(--rose);
+    margin: 0;
+    line-height: 1.3;
+  }
+  .heart-corner { position: absolute; top: 26px; left: 30px; font-size: 22px; color: var(--stone); line-height: 1; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; opacity: 1; transform: none; }
+    button { transition: none; }
+  }
+</style>
+
+<main class="card">
+  <span class="heart-corner" aria-hidden="true">♥</span>
+
+  <section id="ask">
+    <p class="eyebrow">Meeting request</p>
+    <h1>A short meeting about us</h1>
+    <dl class="rows">
+      <div><dt>From</dt><dd>Jatin</dd></div>
+      <div><dt>To</dt><dd>Gaurangi</dd></div>
+      <div><dt>When</dt><dd>Right now, whenever you're ready</dd></div>
+      <div><dt>Where</dt><dd>Your phone</dd></div>
+      <div><dt>Agenda</dt><dd>One poem. Written by me, for you.</dd></div>
+    </dl>
+    <div class="buttons">
+      <button type="button" class="yes" id="yes">Accept 💚</button>
+      <button type="button" class="no" id="no">Decline</button>
+    </div>
+  </section>
+
+  <section id="poem" hidden>
+    <p class="eyebrow">Written just for you</p>
+    <h1>For my Gaurangi</h1>
+
+    <div class="poem-box">
+      <p class="stanza reveal">
+        <span>We started as coworkers, with no grand expectations,</span>
+        <span>Never thought Research and Communication would lead to such connections.</span>
+        <span>From working side by side to planning our first date,</span>
+        <span>Who knew a simple workday could lead to something so great?</span>
+      </p>
+      <p class="stanza reveal">
+        <span>You have such a gentle, warm, doe-like gaze,</span>
+        <span>Oh, when your hair falls to your beautiful face…</span>
+        <span>I hope the world sees your magic on a screen someday,</span>
+        <span>And like <em>Gali Guleiyan</em>, you'll tell stories that stay.</span>
+      </p>
+      <p class="stanza reveal">
+        <span>I remember when my thoughts wouldn't let me rest that day,</span>
+        <span>You called and assured me you were never going away.</span>
+        <span>I may not know what tomorrow holds for me,</span>
+        <span>But I'm grateful that today, you're here with me.</span>
+      </p>
+    </div>
+
+    <p class="note">I hope the English is correct 😅</p>
+    <p class="sign">Your Buddhu loves youu ♥</p>
+  </section>
+</main>
+
+<script>
+  var ask = document.getElementById("ask");
+  var poem = document.getElementById("poem");
+  var yes = document.getElementById("yes");
+  var no = document.getElementById("no");
+  var tries = 0;
+  var replies = ["Declined? Rescheduling for right now 😌", "Invite sent again 🥺", "The meeting is happening anyway 💚"];
+
+  yes.addEventListener("click", function () {
+    ask.hidden = true;
+    poem.hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  no.addEventListener("click", function () {
+    if (tries < replies.length) {
+      no.textContent = replies[tries];
+      yes.classList.add("big");
+      tries += 1;
+    } else {
+      no.hidden = true;
+    }
+  });
+</script>
+
+</body></html>
